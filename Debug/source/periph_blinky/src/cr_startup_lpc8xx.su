@@ -1,0 +1,9 @@
+../source/periph_blinky/src/cr_startup_lpc8xx.c:196:6:data_init	40	static
+../source/periph_blinky/src/cr_startup_lpc8xx.c:205:6:bss_init	24	static
+../source/periph_blinky/src/cr_startup_lpc8xx.c:232:1:ResetISR	24	static
+../source/periph_blinky/src/cr_startup_lpc8xx.c:288:6:NMI_Handler	8	static
+../source/periph_blinky/src/cr_startup_lpc8xx.c:295:6:HardFault_Handler	8	static
+../source/periph_blinky/src/cr_startup_lpc8xx.c:302:6:SVC_Handler	8	static
+../source/periph_blinky/src/cr_startup_lpc8xx.c:309:6:PendSV_Handler	8	static
+../source/periph_blinky/src/cr_startup_lpc8xx.c:316:6:SysTick_Handler	8	static
+../source/periph_blinky/src/cr_startup_lpc8xx.c:330:6:IntDefaultHandler	8	static

@@ -1,0 +1,3 @@
+C:\Users\rego_\Documents\MCUXpressoIDE_11.5.1_7266\workspace\oximetro_de_pulso\drivers/fsl_clock.h:305:20:CLOCK_EnableClock	16	static
+C:\Users\rego_\Documents\MCUXpressoIDE_11.5.1_7266\workspace\oximetro_de_pulso\drivers/fsl_clock.h:336:20:CLOCK_SetClkDivider	16	static
+../board/board.c:26:10:BOARD_InitDebugConsole	16	static

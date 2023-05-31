@@ -1,0 +1,5 @@
+../device/system_LPC812.c:60:17:CLOCK_GetSystemPLLInClkRate	16	static
+../device/system_LPC812.c:89:17:Clock_GetPLLFreq	24	static
+../device/system_LPC812.c:108:6:SystemInit	8	static
+../device/system_LPC812.c:125:6:SystemCoreClockUpdate	24	static
+../device/system_LPC812.c:189:29:SystemInitHook	8	static
