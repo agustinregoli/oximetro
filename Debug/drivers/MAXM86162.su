@@ -1,0 +1,12 @@
+../drivers/MAXM86162.c:19:6:maxm86161_software_reset	32	static
+../drivers/MAXM86162.c:49:6:maxm86161_flush_fifo	32	static
+../drivers/MAXM86162.c:65:6:maxm86161_set_int_level	32	static
+../drivers/MAXM86162.c:86:6:maxm86161_ppg_config	40	static
+../drivers/MAXM86162.c:127:6:maxm86161_led_pa_config_specific	32	static
+../drivers/MAXM86162.c:152:6:maxm86161_led_pa_config	24	static
+../drivers/MAXM86162.c:175:6:maxm86161_led_range_config	32	static
+../drivers/MAXM86162.c:196:6:maxm86161_led_sequence_config	40	static
+../drivers/MAXM86162.c:240:6:maxm86161_interupt_control	40	static
+../drivers/MAXM86162.c:284:6:maxim86162_init_dev	32	static
+../drivers/MAXM86162.c:322:6:maxm86161_get_irq_status	40	static
+../drivers/MAXM86162.c:365:6:maxm86161_read_samples_in_fifo	464	static

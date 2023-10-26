@@ -28,7 +28,7 @@ processor_version: 0.0.0
 #include "pin_mux.h"
 #include "fsl_gpio.h"
 #include  "LPC812.h"
-#include "fsl_gpio.c"
+
 
 
 /* FUNCTION ************************************************************************************************************
@@ -39,11 +39,16 @@ processor_version: 0.0.0
  * END ****************************************************************************************************************/
 #define EXAMPLE_GPIO_BASE  (GPIO_BASE)
 #define EXAMPLE_GPIO_MASTER ((GPIO_Type*)EXAMPLE_GPIO_BASE)
-#define FSL_FEATURE_GPIO_HAS_INTERRUPT (0)
+#define FSL_FEATURE_GPIO_HAS_INTERRUPT (1)
 gpio_pin_config_t config = {
-    .pinDirection = kGPIO_DigitalInput,  // Configurar el puerto como salida digital
+    .pinDirection = kGPIO_DigitalInput,  // Configurar el puerto como entrada digital
     .outputLogic = 0                   // Establecer el nivel lógico inicial en 0
 };
+gpio_interrupt_config_t int_config ={
+		.mode = kGPIO_PinIntEnableLevel,
+		.polarity = kGPIO_PinIntEnableHighOrRise
+};
+
 
 
 void BOARD_InitBootPins(void)
@@ -81,23 +86,23 @@ void BOARD_InitPins(void)
    // Inicio del puerto
     GPIO_PortInit(EXAMPLE_GPIO_MASTER,0);
     //Inicio del pin
-    GPIO_PinInit(EXAMPLE_GPIO_MASTER,0,2,&config);
+    GPIO_PinInit(EXAMPLE_GPIO_MASTER,0,0,&config);
 
-    void configureInterruptPin(void) {
-    	gpio_interrupt_config_t int_config;
+  /*  void configureInterruptPin(void) {
+    	//gpio_interrupt_config_t aux;
 
         // Configurar el modo de disparo de la interrupción (puede ser kGPIO_IntLowLevel, kGPIO_IntHighLevel, kGPIO_IntRisingEdge, kGPIO_IntFallingEdge o kGPIO_IntRisingOrFallingEdge)
-    	int_config.mode = kGPIO_PinIntEnableLevel;
+    	//int_config.mode = kGPIO_PinIntEnableLevel;
 
         // Configurar la polaridad de la interrupción (puede ser kGPIO_IntActiveLow o kGPIO_IntActiveHigh)
-    	int_config.polarity = kGPIO_PinIntEnableHighOrRise;
+    	//int_config.polarity = kGPIO_PinIntEnableHighOrRise;
 
         // Configurar la función de interrupción para el pin específico
-        GPIO_SetPinInterruptConfig(GPIO, INTERRUPT_PIN_PORT, INTERRUPT_PIN_NUM, &interruptConfig);
+    	GPIO_SetPinInterruptConfig(EXAMPLE_GPIO_MASTER, 0, 0, &int_config);
 
         // Habilitar la interrupción en el NVIC (Nested Vectored Interrupt Controller)
 
-    }
+    }*/
 
 
     /* USART0_TXD connect to P0_6*/
@@ -111,6 +116,11 @@ void BOARD_InitPins(void)
 
     /* I2C1_SCL connect to P0_11 */
     SWM_SetMovablePinSelect(SWM0, kSWM_I2C_SCL, kSWM_PortPin_P0_11);
+
+    SWM_SetMovablePinSelect(SWM0, kSWM_GPIO_INT_BMAT, kSWM_PortPin_P0_0);
+    GPIO_SetPinInterruptConfig(EXAMPLE_GPIO_MASTER, 0, 0, &int_config);
+
+
 
     /* Disable clock for switch matrix. */
     CLOCK_DisableClock(kCLOCK_Swm);

@@ -5,6 +5,8 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../drivers/MAXM86161.c \
+../drivers/MAXM86161_I2C.c \
+../drivers/app.c \
 ../drivers/fsl_clock.c \
 ../drivers/fsl_common.c \
 ../drivers/fsl_gpio.c \
@@ -13,10 +15,14 @@ C_SRCS += \
 ../drivers/fsl_reset.c \
 ../drivers/fsl_swm.c \
 ../drivers/fsl_syscon.c \
-../drivers/fsl_usart.c 
+../drivers/fsl_usart.c \
+../drivers/hrm_helper.c \
+../drivers/maxm86161_hrm_spo2.c 
 
 OBJS += \
 ./drivers/MAXM86161.o \
+./drivers/MAXM86161_I2C.o \
+./drivers/app.o \
 ./drivers/fsl_clock.o \
 ./drivers/fsl_common.o \
 ./drivers/fsl_gpio.o \
@@ -25,10 +31,14 @@ OBJS += \
 ./drivers/fsl_reset.o \
 ./drivers/fsl_swm.o \
 ./drivers/fsl_syscon.o \
-./drivers/fsl_usart.o 
+./drivers/fsl_usart.o \
+./drivers/hrm_helper.o \
+./drivers/maxm86161_hrm_spo2.o 
 
 C_DEPS += \
 ./drivers/MAXM86161.d \
+./drivers/MAXM86161_I2C.d \
+./drivers/app.d \
 ./drivers/fsl_clock.d \
 ./drivers/fsl_common.d \
 ./drivers/fsl_gpio.d \
@@ -37,7 +47,9 @@ C_DEPS += \
 ./drivers/fsl_reset.d \
 ./drivers/fsl_swm.d \
 ./drivers/fsl_syscon.d \
-./drivers/fsl_usart.d 
+./drivers/fsl_usart.d \
+./drivers/hrm_helper.d \
+./drivers/maxm86161_hrm_spo2.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

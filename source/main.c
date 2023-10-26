@@ -7,16 +7,21 @@
  */
 
 /*  Standard C Included Files */
-#include "MAXM86161.h"
+//#include "MAXM86161.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "board.h"
-#include "fsl_i2c.h"
+//#include "maxm86161_hrm_config.h"
+#include "maxm86161_hrm_spo2.h"
+//#include "hrm_helper.h"
+//#include "fsl_i2c.h"
 //#include "chip.h"
-#include "fsl_debug_console.h"
-#include "fsl_clock.h"
+//#include "fsl_debug_console.h"
+//#include "fsl_clock.h"
 #include"pin_mux.h"
-#include"LPC812.h"
+//#include"LPC812.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
@@ -99,10 +104,14 @@ maxm86161_device_config_t default_maxim_config = {
 
 //inicializo la variable de comunicación i2c
 //defino la funcion de interupcion
-bool flag_irq=false;
-void I2C0_IRQHandler(void){
+/*bool flag_irq=false;
+void PIN_INT0_IRQHandler(void){
     	 flag_irq=true;
-       }
+       }*/
+bool flag_irq=true;
+void GPIO_PININT_IRQHandler(void){
+	flag_irq=true;
+}
 //defino la variable donde recupero los datos
 maxm86161_ppg_sample_t datos;
 /*!
@@ -122,40 +131,24 @@ int main(void)
     /* Enable I2C interrupt */
        NVIC_SetPriority(PIN_INT2_IRQn, 2);
        NVIC_ClearPendingIRQ(PIN_INT2_IRQn);
-       NVIC_EnableIRQ(PIN_INT2_IRQn);
+       NVIC_EnableIRQ(PIN_INT0_IRQn);
 
-       i2c_master_transfer_t xfer={
-       		  .slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT,
-       		  .direction = kI2C_Write,
-       		  .subaddress = 0,
-       		  .subaddressSize = 0,
-       		  .data = NULL,
-       		  .dataSize = 0,
-       		  .flags = kI2C_TransferDefaultFlag,
-       		};
-
-
-       i2c_master_config_t masterConfig;
-       I2C_MasterGetDefaultConfig(&masterConfig);
-       masterConfig.baudRate_Bps = I2C_BAUDRATE;
-       I2C_MasterInit(EXAMPLE_I2C_MASTER, &masterConfig, I2C_MASTER_CLOCK_FREQUENCY);
-    /*
-    GPIO_PinInit(MAXM86161_INT_GPIO, MAXM86161_INT_PIN, &int_pin_config);
-*/
-       maxim86162_init_dev(EXAMPLE_I2C_MASTER,&xfer,default_maxim_config);
+       hrm_init_app();
+       //el manejo de interrupcion tengo que verlo
 
 
 
+ while (1)    {
 
-        while (1)
-    {
+	 hrm_loop();
 
-if(flag_irq){
-	maxm86161_read_samples_in_fifo(&datos,EXAMPLE_I2C_MASTER);
-	flag_irq=false;
+	 if(flag_irq){
+		 hrm_process_event(flag_irq);
+	 }
+	 flag_irq=false;
+	// GPIO_PortClearInterruptFlags(EXAMPLE_GPIO_MASTER, 0, 0x01);
 
-
-    }}
+    }
         return 0;
 }
 

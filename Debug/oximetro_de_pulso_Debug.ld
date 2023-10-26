@@ -6,7 +6,7 @@
  * Generated linker script file for LPC812
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v11.5.1 [Build 7266] [2022-04-13] on 30 may. 2023 21:10:39
+ * MCUXpresso IDE v11.5.1 [Build 7266] [2022-04-13] on 24 oct. 2023 21:06:22
  */
 
 INCLUDE "oximetro_de_pulso_Debug_library.ld"

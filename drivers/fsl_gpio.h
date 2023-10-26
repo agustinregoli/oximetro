@@ -49,7 +49,7 @@ typedef struct _gpio_pin_config
     uint8_t outputLogic; /*!< Set default output logic, no use in input */
 } gpio_pin_config_t;
 
-//#if (defined(FSL_FEATURE_GPIO_HAS_INTERRUPT) && FSL_FEATURE_GPIO_HAS_INTERRUPT)
+#if (defined(FSL_FEATURE_GPIO_HAS_INTERRUPT) && FSL_FEATURE_GPIO_HAS_INTERRUPT)
 #define GPIO_PIN_INT_LEVEL 0x00U
 #define GPIO_PIN_INT_EDGE  0x01U
 
@@ -267,7 +267,7 @@ static inline uint32_t GPIO_PortMaskedRead(GPIO_Type *base, uint32_t port)
     return (uint32_t)base->MPIN[port];
 }
 
-//#if defined(FSL_FEATURE_GPIO_HAS_INTERRUPT) && FSL_FEATURE_GPIO_HAS_INTERRUPT
+#if defined(FSL_FEATURE_GPIO_HAS_INTERRUPT) && FSL_FEATURE_GPIO_HAS_INTERRUPT
 /*!
  * @brief Set the configuration of pin interrupt.
  *
@@ -350,7 +350,7 @@ void GPIO_PinDisableInterrupt(GPIO_Type *base, uint32_t port, uint32_t pin, uint
  */
 void GPIO_PinClearInterruptFlag(GPIO_Type *base, uint32_t port, uint32_t pin, uint32_t index);
 
-//#endif /* FSL_FEATURE_GPIO_HAS_INTERRUPT */
+#endif /* FSL_FEATURE_GPIO_HAS_INTERRUPT */
 
 /*@}*/
 

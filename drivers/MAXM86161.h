@@ -11,7 +11,9 @@
 
 /*==================[inclusions]=============================================*/
 #include <stdint.h>
-#include "fsl_i2c.h"
+//#include "fsl_i2c.h"
+#include "MAXM86161_I2C.h"
+
 /*==================[cplusplus]==============================================*/
 #ifdef __cplusplus
 extern "C" {
@@ -193,15 +195,15 @@ typedef struct
 } maxm86161_fifo_data_t;
 
 /// @endcond
-/// Raw data FIFO queue typedef
-/*typedef struct {
+// Raw data FIFO queue typedef
+typedef struct {
   volatile uint16_t head;        ///< Index of next byte to get.
   volatile uint16_t tail;        ///< Index of where to enqueue next byte.
   volatile uint16_t used;        ///< Number of bytes queued.
   uint16_t size;                 ///< Size of FIFO.
   uint8_t located;
   int8_t *fifo;                  ///< Pointer to FIFO of queue data (allocated by user)
-} maxm86161_fifo_queue_t;*/
+} maxm86161_fifo_queue_t;
 
 
 typedef struct {
@@ -210,10 +212,10 @@ typedef struct {
   uint32_t ppg3;        ///< ppg3 sample data
 } maxm86161_ppg_sample_t;
 
-/*typedef struct {
+typedef struct {
   maxm86161_fifo_queue_t queue;
   uint8_t sampleSize;
-} maxm86161_fifo_queue_config_t;*/
+} maxm86161_fifo_queue_config_t;
 
 #define MAXM86161DRV_PPG_SAMPLE_SIZE_BYTES 12
 
@@ -294,19 +296,19 @@ typedef struct maxm86161_device_config
  ***************   Functions supplied by maxm86161.c   ******************
  ******************************************************************************/
 
-void maxm86161_flush_fifo(I2C_Type *base, i2c_master_transfer_t *xfer);
-void maxm86161_led_pa_config(I2C_Type *base, i2c_master_transfer_t *xfer, maxm86161_ledpa_t *ledpa);
-void maxm86161_set_int_level(I2C_Type *base, i2c_master_transfer_t *xfer, uint8_t level);
-void maxm86161_software_reset(I2C_Type *base, i2c_master_transfer_t *xfer);
+void maxm86161_flush_fifo();
+void maxm86161_led_pa_config(maxm86161_ledpa_t *ledpa);
+void maxm86161_set_int_level( uint8_t level);
+void maxm86161_software_reset();
 void maxm86161_shutdown_device(bool turn_off);
-void maxim86162_init_dev(I2C_Type *base, i2c_master_transfer_t *xfer,maxm86161_device_config_t global_cfg);
+void maxim86161_init_dev(maxm86161_device_config_t global_cfg);
 //(I2C_Type *base, i2c_master_transfer_t *xfer,maxm86161_device_config_t global_cfg)
 //void maxm86161_led_pa_config_specific(I2C_Type *base, i2c_master_transfer_t *xfer,uint8_t ledx, uint8_t value);
 //void maxm86161_led_range_config(I2C_Type *base, i2c_master_transfer_t *xfer,maxm86161_led_range_curr_t *led_range);
-void maxm86161_led_sequence_config(I2C_Type *base, i2c_master_transfer_t *xfer,maxm86161_ledsq_cfg_t *ledsq);
-void maxm86161_interupt_control(I2C_Type *base, i2c_master_transfer_t *xfer,maxm86161_int_t *int_ctrl);
-void maxm86161_get_irq_status(I2C_Type *base, i2c_master_transfer_t *xfer,maxm86161_int_t *int_status);
-void maxm86161_ppg_config(I2C_Type *base, i2c_master_transfer_t *xfer,maxm86161_ppg_cfg_t *ppg_cfg);
+void maxm86161_led_sequence_config(maxm86161_ledsq_cfg_t *ledsq);
+void maxm86161_interupt_control(maxm86161_int_t *int_ctrl);
+void maxm86161_get_irq_status(maxm86161_int_t *int_status);
+void maxm86161_ppg_config(maxm86161_ppg_cfg_t *ppg_cfg);
 
 
 
@@ -391,7 +393,105 @@ void maxm86161_ppg_config(I2C_Type *base, i2c_master_transfer_t *xfer,maxm86161_
 /***************************************************************************//**
  * Fifo/Interrupt Processing functions
  ******************************************************************************/
-bool maxm86161_read_samples_in_fifo(maxm86161_ppg_sample_t *sample,I2C_Type *base);
+//bool maxm86161_read_samples_in_fifo(maxm86161_ppg_sample_t *sample);
+/***************************************************************************//**
+ ***************    Data Fifo Queue Functions   ********************************
+ ******************************************************************************/
+
+/***************************************************************************//**
+ * @brief
+ *    Process FULL interrupt to get PPG sample and put it into the queue
+ *
+ * @param[out] queue
+ *    Pointer to queue where PPG sample is put
+ *
+ * @return
+ *    None
+ *
+ ******************************************************************************/
+void maxm86161_read_samples_in_fifo(maxm86161_fifo_queue_t *queue);
+
+/***************************************************************************//**
+ * @brief
+ *    Clear the Maxm86161 queue
+ *
+ * @param[in] queue
+ *    Pointer to queue
+ *
+ * @return
+ *    None
+ *
+ ******************************************************************************/
+void maxm86161_clear_queue(maxm86161_fifo_queue_t *queue);
+
+/***************************************************************************//**
+ * @brief
+ *    Count the number of sample in queue
+ *
+ * @param[in] queue
+ *    Pointer to queue
+ *
+ * @return
+ *    Number of sample in queue
+ *
+ ******************************************************************************/
+uint16_t maxm86161_num_samples_in_queue(maxm86161_fifo_queue_t *queue);
+
+/***************************************************************************//**
+ * @brief
+ *    Put ppg sample to the queue
+ *
+ * @param[in] queue
+ *    Pointer to queue
+ *
+ * @param[in] sample
+ *    Pointer to ppg sample
+ *
+ * @return
+ *    sl_status_t error code
+ *
+ ******************************************************************************/
+void maxm86161_enqueue_ppg_sample_data (maxm86161_fifo_queue_t *queue,
+                                               maxm86161_ppg_sample_t *sample);
+
+/***************************************************************************//**
+ * @brief
+ *    Pop a sample from queue
+ *
+ * @param[in] queue
+ *    Pointer to queue
+ *
+ * @param[in] sample
+ *    Pointer to ppg sample
+ *
+ * @return
+ *    sl_status_t error code
+ *    none?
+ *
+ ******************************************************************************/
+void maxm86161_dequeue_ppg_sample_data (maxm86161_fifo_queue_t *queue,
+                                               maxm86161_ppg_sample_t *sample, int *ret);
+
+/***************************************************************************//**
+ * @brief
+ *    Allocate a fifo queue for PPG maxim data
+ *
+ * @param[in] queue
+ *    Pointer to queue
+ *
+ * @param[in] queueBuffer
+ *    Pointer to buffer to use for fifo queue
+ *
+ * @param[in] queueSizeInBytes
+ *    Queue buffer size in bytes
+ *
+ * @return
+ *    sl_status_t error code
+ *
+ ******************************************************************************/
+void maxm86161_allocate_ppg_data_queue( maxm86161_fifo_queue_t *queue,
+                                               maxm86161_ppg_sample_t *queueBuffer,
+                                               int16_t queueSizeInBytes);
 
 
 
