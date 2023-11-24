@@ -1,0 +1,8 @@
+../max/hrm_helper.c:23:6:maxm86161_helper_sample_queue_clear	8	static
+../max/hrm_helper.c:31:9:maxm86161_hrm_helper_sample_queue_numentries	16	static
+../max/hrm_helper.c:42:9:maxm86161_hrm_helper_sample_queue_get	40	static
+../max/hrm_helper.c:66:9:maxm86161_hrm_helper_initialize	16	static
+../max/hrm_helper.c:80:6:maxm86161_hrm_helper_process_irq	16	static
+../max/hrm_helper.c:116:6:maxm86161_get_prox_mode	8	static
+../max/hrm_helper.c:125:6:hrm_helper_output_debug_message	16	static
+../max/hrm_helper.c:133:6:hrm_helper_output_raw_sample_debug_message	16	static

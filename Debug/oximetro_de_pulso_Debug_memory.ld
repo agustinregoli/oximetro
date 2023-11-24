@@ -6,7 +6,7 @@
  * Generated linker script file for LPC812
  * Created from memory.ldt by FMCreateLinkMemory
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v11.5.1 [Build 7266] [2022-04-13] on 24 oct. 2023 21:06:22
+ * MCUXpresso IDE v11.5.1 [Build 7266] [2022-04-13] on 24 nov. 2023 17:35:32
  */
 
 MEMORY

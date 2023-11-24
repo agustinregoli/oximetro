@@ -1,0 +1,8 @@
+fsl_clock.h:305:20:CLOCK_EnableClock	16	static
+app.c:94:12:hrm_init_app	8	static
+app.c:107:13:hrm_gpio_setup	16	static
+app.c:123:12:hrm_process_event	16	static
+app.c:144:12:hrm_loop	32	static
+app.c:198:15:hrm_get_heart_rate	8	static
+app.c:206:12:hrm_get_status	8	static
+app.c:215:15:hrm_get_spo2	8	static

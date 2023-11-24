@@ -1,0 +1,8 @@
+C:\Users\rego_\Documents\MCUXpressoIDE_11.5.1_7266\workspace\oximetro_de_pulso\drivers/fsl_clock.h:305:20:CLOCK_EnableClock	16	static
+../max/app.c:84:12:hrm_init_app	8	static
+../max/app.c:97:13:hrm_gpio_setup	16	static
+../max/app.c:110:12:hrm_process_event	16	static
+../max/app.c:120:12:hrm_loop	32	static
+../max/app.c:178:15:hrm_get_heart_rate	8	static
+../max/app.c:186:12:hrm_get_status	8	static
+../max/app.c:195:15:hrm_get_spo2	8	static

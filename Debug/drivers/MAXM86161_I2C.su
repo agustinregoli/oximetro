@@ -1,1 +1,1 @@
-../drivers/MAXM86161_I2C.c:40:6:maxm86161_i2c_write_to_register	24	static
+MAXM86161_I2C.c:40:6:maxm86161_i2c_write_to_register	24	static

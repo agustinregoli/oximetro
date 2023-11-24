@@ -1,4 +1,5 @@
 C:\Users\rego_\Documents\MCUXpressoIDE_11.5.1_7266\workspace\oximetro_de_pulso\drivers/fsl_clock.h:305:20:CLOCK_EnableClock	16	static
 C:\Users\rego_\Documents\MCUXpressoIDE_11.5.1_7266\workspace\oximetro_de_pulso\drivers/fsl_clock.h:315:20:CLOCK_DisableClock	16	static
-../board/pin_mux.c:54:6:BOARD_InitBootPins	8	static
-../board/pin_mux.c:80:6:BOARD_InitPins	8	static
+C:\Users\rego_\Documents\MCUXpressoIDE_11.5.1_7266\workspace\oximetro_de_pulso\drivers/fsl_iocon.h:102:22:IOCON_PinMuxSet	24	static
+../board/pin_mux.c:48:6:BOARD_InitBootPins	8	static
+../board/pin_mux.c:74:6:BOARD_InitPins	16	static

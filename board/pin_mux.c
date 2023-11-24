@@ -28,26 +28,20 @@ processor_version: 0.0.0
 #include "pin_mux.h"
 #include "fsl_gpio.h"
 #include  "LPC812.h"
-
-
-
+#include "fsl_pint.h"
+#include "fsl_iocon.h"
 /* FUNCTION ************************************************************************************************************
  *
  * Function Name : BOARD_InitBootPins
  * Description   : Calls initialization functions.
  *
  * END ****************************************************************************************************************/
-#define EXAMPLE_GPIO_BASE  (GPIO_BASE)
-#define EXAMPLE_GPIO_MASTER ((GPIO_Type*)EXAMPLE_GPIO_BASE)
-#define FSL_FEATURE_GPIO_HAS_INTERRUPT (1)
+
 gpio_pin_config_t config = {
     .pinDirection = kGPIO_DigitalInput,  // Configurar el puerto como entrada digital
     .outputLogic = 0                   // Establecer el nivel lógico inicial en 0
 };
-gpio_interrupt_config_t int_config ={
-		.mode = kGPIO_PinIntEnableLevel,
-		.polarity = kGPIO_PinIntEnableHighOrRise
-};
+
 
 
 
@@ -81,29 +75,15 @@ void BOARD_InitPins(void)
 {
     /* Enables clock for switch matrix.: 0x01u */
     CLOCK_EnableClock(kCLOCK_Swm);
-	//Chip_GPIO_Init(LPC_GPIO_PORT);
 
-   // Inicio del puerto
-    GPIO_PortInit(EXAMPLE_GPIO_MASTER,0);
-    //Inicio del pin
-    GPIO_PinInit(EXAMPLE_GPIO_MASTER,0,0,&config);
-
-  /*  void configureInterruptPin(void) {
-    	//gpio_interrupt_config_t aux;
-
-        // Configurar el modo de disparo de la interrupción (puede ser kGPIO_IntLowLevel, kGPIO_IntHighLevel, kGPIO_IntRisingEdge, kGPIO_IntFallingEdge o kGPIO_IntRisingOrFallingEdge)
-    	//int_config.mode = kGPIO_PinIntEnableLevel;
-
-        // Configurar la polaridad de la interrupción (puede ser kGPIO_IntActiveLow o kGPIO_IntActiveHigh)
-    	//int_config.polarity = kGPIO_PinIntEnableHighOrRise;
-
-        // Configurar la función de interrupción para el pin específico
-    	GPIO_SetPinInterruptConfig(EXAMPLE_GPIO_MASTER, 0, 0, &int_config);
-
-        // Habilitar la interrupción en el NVIC (Nested Vectored Interrupt Controller)
-
-    }*/
-
+    const uint32_t IOCON_INDEX_PIO0_12_config = (/* Selects pull-up function */
+    		IOCON_MODE_PULLUP |
+			/* Enable hysteresis */
+			IOCON_HYS_EN |
+			/* Bypass input filter */
+			IOCON_S_MODE_0CLK);
+        /* PIO0 PIN12 (coords: 4) is configured as GPIO, PIO0, 12. */
+    IOCON_PinMuxSet(IOCON, IOCON_INDEX_PIO0_12, IOCON_INDEX_PIO0_12_config);
 
     /* USART0_TXD connect to P0_6*/
    SWM_SetMovablePinSelect(SWM0, kSWM_USART0_TXD, kSWM_PortPin_P0_6);
@@ -116,10 +96,6 @@ void BOARD_InitPins(void)
 
     /* I2C1_SCL connect to P0_11 */
     SWM_SetMovablePinSelect(SWM0, kSWM_I2C_SCL, kSWM_PortPin_P0_11);
-
-    SWM_SetMovablePinSelect(SWM0, kSWM_GPIO_INT_BMAT, kSWM_PortPin_P0_0);
-    GPIO_SetPinInterruptConfig(EXAMPLE_GPIO_MASTER, 0, 0, &int_config);
-
 
 
     /* Disable clock for switch matrix. */

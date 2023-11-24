@@ -18,6 +18,7 @@ board \
 component/uart \
 device \
 drivers \
+max \
 source \
 startup \
 utilities \

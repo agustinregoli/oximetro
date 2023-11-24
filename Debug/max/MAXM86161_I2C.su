@@ -1,0 +1,4 @@
+../max/MAXM86161_I2C.c:40:6:maxm86161_i2c_write_to_register	16	static
+../max/MAXM86161_I2C.c:49:6:maxm86161_i2c_read_from_register	16	static
+../max/MAXM86161_I2C.c:60:6:maxm86161_i2c_block_write	16	static
+../max/MAXM86161_I2C.c:70:6:maxm86161_i2c_block_read	16	static
